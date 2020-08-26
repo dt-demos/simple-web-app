@@ -1,0 +1,21 @@
+{
+  "name": "simple-web-service",
+  "version": "1.0.0",
+  "description": "simple-web-service",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rob.jahn@dynatrace.com",
+  "license": "MIT",
+  "repository": "https://github.com/dt-demos/simple-web-service",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "sleep": "6.3.0"
+  },
+  "engines": {
+    "node": "12.x"
+  }
+}

@@ -1,0 +1,4 @@
+{
+    "DYNATRACE_BASE_URL": "EXAMPLE: https://XXXX.live.dynatrace.com",
+    "DYNATRACE_API_TOKEN": "YOUR API TOKEN",
+}

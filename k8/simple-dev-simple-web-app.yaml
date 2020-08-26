@@ -1,0 +1,49 @@
+# simple-web-app DEPLOYMENT ################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-web-app
+  namespace: simple-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-web-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: simple-web-app
+    spec:
+      containers:
+      - env:
+        - name: DT_CUSTOM_PROP
+          value: "stage=dev project=demo service=simple-web-app"
+        - name: SERVICE_TO_CALL_URL
+          value: none
+        image: dtdemos/simple-web-app:0.1.0
+        imagePullPolicy: "Always"
+        name: simple-web-app
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+# simple-web-app SERVICE ################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-web-app
+  namespace: simple-dev
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: simple-web-app
+  type: LoadBalancer
+status:
+  loadBalancer: {}
