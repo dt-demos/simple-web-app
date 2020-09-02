@@ -60,11 +60,14 @@ do
   
   testStepName=home
   echo "  calling TSN=$testStepName; $(curl -s "$url:8080" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
+  echo "  calling TSN=$testStepName; $(curl -s "$url:8090" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
 
   #testStepName=message
   #echo "  calling TSN=$testStepName; $(curl -s "$url:8180/api/message" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
   #echo "  calling TSN=$testStepName; $(curl -s "$url:8280/api/message" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
   #echo "  calling TSN=$testStepName; $(curl -s "$url:8380/api/message" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
+  #echo "  calling TSN=$testStepName; $(curl -s "$url:8480/api/message" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
+  #echo "  calling TSN=$testStepName; $(curl -s "$url:8580/api/message" -w "%{http_code}; %{time_total}" -H "x-dynatrace-test: LSN=$loadScriptName;LTN=$loadTestName;TSN=$testStepName;" -o /dev/nul)"
 
   sleep $thinktime
   ctr=`expr $ctr + 1`

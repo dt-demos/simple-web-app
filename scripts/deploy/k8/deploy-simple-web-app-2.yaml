@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-web-app-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-web-app-2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: simple-web-app-2
+    spec:
+      containers:
+      - env:
+        - name: DT_CUSTOM_PROP
+          value: "team=breadfruit stage=dev project=demo service=simple-web-app-2"
+        - name: SERVICE_TO_CALL_URL
+          value: none
+        image: dtdemos/simple-web-app-2:0.1.0
+        imagePullPolicy: "Always"
+        name: simple-web-app-2
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+status: {}

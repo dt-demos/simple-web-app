@@ -17,26 +17,31 @@ fi
 # optional pass in the service name
 if [ $# -lt 2 ]
 then
-  SERVICE_TAG=simple-web-service-3
+  SERVICE_TAG=simple-web-app-1
 else
   SERVICE_TAG=$2
 fi
 
+RELEASE_DEFINITION_NAME="Deploy-release-$RELEASE_ID"
+RELEASE_TEAM_PROJECT="apples"
+RELEASE_URL="http://fakeurl-to-ci-cd-job"
+PROJECT_TAG=demo
+STAGE_TAG=dev
 DYNATRACE_BASE_URL=$(cat $CREDS_FILE | jq -r '.DYNATRACE_BASE_URL')
 DYNATRACE_API_TOKEN=$(cat $CREDS_FILE | jq -r '.DYNATRACE_API_TOKEN')
 
 function send-deploy-event() {
 
-  RELEASE_DEFINITION_NAME="Deployment-$RELEASE_ID"
-  RELEASE_TEAM_PROJECT="demo-project"
-  RELEASE_URL="http://fakeurl-to-ci-cd-job"
-
-  PROJECT_TAG=demo
-  STAGE_TAG=dev
-
-  cd dynatrace
-  ./send-deploy-event.sh $DYNATRACE_BASE_URL $DYNATRACE_API_TOKEN $RELEASE_DEFINITION_NAME $RELEASE_ID $RELEASE_TEAM_PROJECT $RELEASE_URL $PROJECT_TAG $STAGE_TAG $SERVICE_TAG
-  cd ..
+  ./_send-deploy-event.sh \
+    $DYNATRACE_BASE_URL \
+    $DYNATRACE_API_TOKEN \
+    $RELEASE_DEFINITION_NAME \
+    $RELEASE_ID \
+    $RELEASE_TEAM_PROJECT \
+    $RELEASE_URL \
+    $PROJECT_TAG \
+    $STAGE_TAG \
+    $SERVICE_TAG
 }
 
 # Main routine

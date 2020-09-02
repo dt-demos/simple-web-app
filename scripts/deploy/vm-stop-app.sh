@@ -1,5 +1,8 @@
 #!/bin/bash
 
+numapp=2
+numweb=5
+
 function stop-container() {
   name=$1
 
@@ -14,9 +17,14 @@ function stop-container() {
 }
 
 # Main routine
-stop-container service-1
-stop-container service-2
-stop-container service-3
-stop-container simple-web-app
+for imageid in $(eval echo "{1..$numapp}")
+do
+  stop-container simple-web-app-$imageid
+done
+
+for imageid in $(eval echo "{1..$numweb}")
+do
+  stop-container simple-web-service-$imageid
+done
 
 sudo docker ps

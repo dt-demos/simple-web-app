@@ -35,7 +35,7 @@ echo "================================================================="
 POST_DATA=$(cat <<EOF
     {
         "eventType" : "CUSTOM_DEPLOYMENT",
-        "source" : "deployment.sh" ,
+        "source" : "send-deploy-event script" ,
         "deploymentName" : "$RELEASE_DEFINITION_NAME",
         "deploymentVersion" : "$RELEASE_ID"  ,
         "deploymentProject" : "$RELEASE_TEAM_PROJECT" ,

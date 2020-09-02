@@ -29,7 +29,7 @@ echo "================================================================="
 POST_DATA=$(cat <<EOF
     {
         "eventType" : "CUSTOM_INFO",
-        "source" : "testevent.sh" ,
+        "source" : "send-custom-test-event script" ,
         "title" : "$TITLE",
         "description" : "$DESCRIPTION"  ,
         "attachRules" : {

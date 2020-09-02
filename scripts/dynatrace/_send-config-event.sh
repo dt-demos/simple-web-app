@@ -31,7 +31,7 @@ echo "================================================================="
 POST_DATA=$(cat <<EOF
     {
         "eventType" : "CUSTOM_CONFIGURATION",
-        "source" : "testevent.sh" ,
+        "source" : "send-config-event script" ,
         "configuration" : "$CONFIGURATION",
         "description" : "$DESCRIPTION"  ,
         "attachRules" : {
