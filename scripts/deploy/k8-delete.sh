@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAMESPACE=demo-app-dev
-kubectl delete $NAMESPACE
+kubectl delete ns $NAMESPACE
 
 echo "==========================================================="
 echo "kubectl get ns"
