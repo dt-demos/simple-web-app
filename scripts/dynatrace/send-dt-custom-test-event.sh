@@ -6,19 +6,19 @@ if ! [ -f "$CREDS_FILE" ]; then
   exit 1
 fi
 
-# optional pass in the description
-if [ $# -lt 1 ]
-then
-  DESCRIPTION="Load test start"
-else
-  DESCRIPTION=$1
-fi
-
-TITLE=$DESCRIPTION
-PROJECT_TAG=demo
-STAGE_TAG=dev
 DYNATRACE_BASE_URL=$(cat $CREDS_FILE | jq -r '.DYNATRACE_BASE_URL')
 DYNATRACE_API_TOKEN=$(cat $CREDS_FILE | jq -r '.DYNATRACE_API_TOKEN')
+
+if [[ $# -ne 4 ]]; then
+  echo "Abort: Missing arguments"
+  echo "./send-dt-custom-test-event.sh TITLE DESCRIPTION PROJECT_TAG STAGE_TAG"
+  exit 1
+fi
+
+TITLE=$1
+DESCRIPTION=$2
+PROJECT_TAG=$3
+STAGE_TAG=$4
 
 function custom-test-event() {
 

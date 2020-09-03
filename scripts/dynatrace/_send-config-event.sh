@@ -3,6 +3,11 @@
 # Unix Shell script to send an create Dynatrace deployment API call 
 # Assumes that will tag entities with an "project", "stage" and "service" TAG
 
+if [[ $# -ne 7 ]]; then
+  echo "Abort: Missing arguments"
+  exit 1
+fi
+
 DYNATRACE_BASE_URL="$1"
 DYNATRACE_API_TOKEN="$2"
 
