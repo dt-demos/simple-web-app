@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Testing Sample NodeJs" enabled="true">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Testing Simple Web App" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="SERVER_NAME" elementType="Argument">
-            <stringProp name="Argument.name">SERVER_NAME</stringProp>
+          <elementProp name="SERVER_NAME1" elementType="Argument">
+            <stringProp name="Argument.name">SERVER_NAME1</stringProp>
             <stringProp name="Argument.value">localhost</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="SERVER_PORT" elementType="Argument">
-            <stringProp name="Argument.name">SERVER_PORT</stringProp>
+          <elementProp name="SERVER_PORT1" elementType="Argument">
+            <stringProp name="Argument.name">SERVER_PORT1</stringProp>
             <stringProp name="Argument.value">8080</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="CHECK_PATH" elementType="Argument">
-            <stringProp name="Argument.name">CHECK_PATH</stringProp>
-            <stringProp name="Argument.value">/</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="DT_LTN" elementType="Argument">
             <stringProp name="Argument.name">DT_LTN</stringProp>
-            <stringProp name="Argument.value">Default</stringProp>
+            <stringProp name="Argument.value">local-test</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="THINK_TIME" elementType="Argument">
@@ -37,6 +32,26 @@
             <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="SERVER_NAME2" elementType="Argument">
+            <stringProp name="Argument.name">SERVER_NAME2</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SERVER_PORT2" elementType="Argument">
+            <stringProp name="Argument.name">SERVER_PORT2</stringProp>
+            <stringProp name="Argument.value">8090</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="LOOP_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">LOOP_COUNT</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="VU_COUNT" elementType="Argument">
+            <stringProp name="Argument.name">VU_COUNT</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -46,9 +61,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(LOOP_COUNT,1)}</stringProp>
+          <stringProp name="LoopController.loops">${__P(LOOP_COUNT,${LOOP_COUNT})}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(VU_COUNT,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(VU_COUNT,${VU_COUNT})}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1444323045000</longProp>
         <longProp name="ThreadGroup.end_time">1444323045000</longProp>
@@ -106,8 +121,32 @@ hm.add(new org.apache.jmeter.protocol.http.control.Header(&quot;x-dynatrace-test
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${__P(SERVER_NAME,${SERVER_NAME})}</stringProp>
-          <stringProp name="HTTPSampler.port">${__P(SERVER_PORT,${SERVER_PORT})}</stringProp>
+          <stringProp name="HTTPSampler.domain">${__P(SERVER_NAME1,${SERVER_NAME1})}</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(SERVER_PORT1,${SERVER_PORT1})}</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers"/>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HomePage" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${__P(SERVER_NAME2,${SERVER_NAME2})}</stringProp>
+          <stringProp name="HTTPSampler.port">${__P(SERVER_PORT2,${SERVER_PORT2})}</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/</stringProp>

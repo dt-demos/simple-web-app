@@ -1,0 +1,9 @@
+{
+    "SERVER_NAME1": "EXAMPLE: aa.bb.cc.dd",
+    "SERVER_PORT1": "8080",
+    "SERVER_NAME2": "EXAMPLE: aa.bb.cc.dd",
+    "SERVER_PORT2": "8090",
+    "VU_COUNT": "3",
+    "LOOP_COUNT": "14400",
+    "THINK_TIME": "250"
+}
