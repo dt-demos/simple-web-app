@@ -19,7 +19,7 @@ spec:
         - name: DT_CUSTOM_PROP
           value: "team=apple stage=dev project=demo service=simple-web-app-1"
         - name: SERVICE_TO_CALL_URL
-          value: none
+          value: http://simple-web-service-1:8180/api/message
         image: dtdemos/simple-web-app-1:0.1.0
         imagePullPolicy: "Always"
         name: simple-web-app-1
