@@ -22,7 +22,7 @@ By configuring the simple-web-app `SERVICE_TO_CALL_URL` to a simple-web-service 
 
 ## simple-web-app
 
-If the simple-web-app can reach the `SERVICE_TO_CALL_URL` it is configured with or if `SERVICE_TO_CALL_URL` is set to `none`, then the UI will show green.  If there is an error reaching the `SERVICE_TO_CALL_URL`, then it will show red. 
+If the simple-web-app can reach the `SERVICE_TO_CALL_URL` it is configured with or if `SERVICE_TO_CALL_URL` is set to `none`, then the UI will show green.  If there is an error reaching the `SERVICE_TO_CALL_URL`, then it will show red and return an HTTP 500 error.
 
 <img src="images/webapp-response.png" width="500"/>
 
@@ -34,4 +34,6 @@ See the [simple-web-service README](simple-web-service/README.md) for more detai
 
 # Usage
 
-See the [scripts README](scripts/README.md) for more details.
+Assumes you have a Dynatrace tenant monitoring the application.  The application can be running on a VM or on Kubernetes.
+
+See the [scripts README](scripts/README.md) for more details for now to deploy.
