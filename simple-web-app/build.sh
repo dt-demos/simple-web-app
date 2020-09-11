@@ -28,6 +28,7 @@ do
   echo "==============================================="
   echo "build $baseimage-$imageid:$tag"
   echo "==============================================="
+  ../scripts/build/writeManifest.sh $baseimage-$imageid $tag
   docker build --rm -t $baseimage-$imageid:$tag --build-arg SERVICE_NAME=simple-web-app-$imageid .
 done
 

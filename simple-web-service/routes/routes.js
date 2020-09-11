@@ -62,13 +62,18 @@ router.get('/', function(req, res) {
 });
 
 router.get('/about', function(req, res) {
+  fs = require('fs');
+  let data="";
+  try {
+    data = fs.readFileSync('MANIFEST', 'utf8')
+    console.log(data)
+  } catch (err) {
+    console.error(err)
+    data="MANIFEST file not found"
+  }
+  console.log(data);
   res.setHeader('Content-Type', 'application/json');
-  res.status(200).json({ 
-    serviceName: serviceName, 
-    messageurl: serviceToCall,
-    errorRate: global.errorRate,
-    responseDelay: global.responseDelay
-  }); 
+  res.status(200).send(data); 
 });
 
 router.get('/url/:setting', function(req, res) {
@@ -107,13 +112,15 @@ router.get('/message', async (req, res, next) => {
     }
   }
 
+  var responseMessage = '{ "whoami": "' + global.serviceName + '", "errorRate": "' + global.errorRate + '", "responseDelay": "' + global.responseDelay + '"';
   // do this as to avoid the ERR_HTTP_HEADERS_SENT issue
   if (fakeError) {
-    res.status(500).json({ result: 'error', message: 'Faking out an error' });
+    responseMessage += ',"call": { "url": "none","status": "500","response": "Faking out an error"}}';
+    console.log('Faking out an error: ' + responseMessage);
+    res.status(500).send(JSON.stringify(JSON.parse(responseMessage),null,3));
   }
   else {
-    var responseMessage = '{ "whoami": "I am ' + serviceName + '"';
-    responseMessage += ',"call": { "url":"'+serviceToCall+'"';
+    responseMessage += ',"call": { "url": "'+serviceToCall+'"';
 
     // determine if make a backend call
     if ( serviceToCall != "none" ) {
@@ -131,32 +138,32 @@ router.get('/message', async (req, res, next) => {
 
           console.log('Response: ' + JSON.stringify(data));
           console.log('statusCode: ' + callResp.statusCode.toString());
-          responseMessage += ',"status":"'+callResp.statusCode.toString()+'"';
+          responseMessage += ',"status": "'+callResp.statusCode.toString()+'"';
           if (callResp.statusCode == 200) {
             if ( global.responseDelay > 0) {
               console.log('Sleeping: ' + global.responseDelay);
               sleep.sleep(global.responseDelay);
             }
-            responseMessage += ',"response":'+ data.toString()+'}}';
+            responseMessage += ',"response": '+ data.toString()+'}}';
             console.log('Final responseMessage: ' + responseMessage );
-            res.status(200).send(responseMessage);
+            res.status(200).send(JSON.stringify(JSON.parse(responseMessage),null,3));
           }
           else {
-            responseMessage += ',"response":'+ data.toString()+'}}';
+            responseMessage += ',"response": '+ data.toString()+'}}';
             console.log(responseMessage);
-            res.status(500).send(responseMessage);
+            res.status(500).send(JSON.stringify(JSON.parse(responseMessage),null,3));
           }
         });
       }).on("error", (err) => {
         console.log("Error: " + err.message);
-        responseMessage += ',"status":"500"';
-        responseMessage += ',"response":"'+err.message+'"}}';
-        res.status(500).send(responseMessage);
+        responseMessage += ',"status": "500"';
+        responseMessage += ',"response": "'+err.message+'"}}';
+        res.status(500).send(JSON.stringify(JSON.parse(responseMessage),null,3));
       }).on('uncaughtException', function (err) {
         console.log(err);
-        responseMessage += ',"status":"500"';
-        responseMessage += ',"response":"'+err.message+'"}}';
-        res.status(500).send(responseMessage);
+        responseMessage += ',"status": "500"';
+        responseMessage += ',"response": "'+err.message+'"}}';
+        res.status(500).send(JSON.stringify(JSON.parse(responseMessage),null,3));
       });
     }
     else {
@@ -167,7 +174,7 @@ router.get('/message', async (req, res, next) => {
         console.log('Sleeping: ' + global.responseDelay);
         sleep.sleep(global.responseDelay);
       }
-      res.status(200).send(responseMessage);
+      res.status(200).send(JSON.stringify(JSON.parse(responseMessage),null,3));
     }
   }
 });  

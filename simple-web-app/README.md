@@ -33,3 +33,21 @@ Example result:
 ```
 {"result":"success","message":"Set serviceToCall to: http://11.22.33.44:55:8180/api/message"}
 ```
+
+## about
+
+Retrieve the settings for the service.
+
+Example:
+
+```
+http://localhost:8080/about
+{
+    "DATE" : "20200910.0844",
+    "IMAGE_NAME" : "dtdemos/simple-web-app",
+    "IMAGE_TAG" : "0.1.0",
+    "REPO" : "https://github.com/dt-demos/simple-web-app.git",
+    "BRANCH" : "master",
+    "SHA" : "34806c14e248f91fc3ee5e17e1a4f0e36539c8cd",
+}
+```

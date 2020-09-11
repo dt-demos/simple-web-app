@@ -17,16 +17,46 @@ This is the main interface that will return a concatenated string;
 Examples:
 
 ```
-# sample failure output
-GET request: http://localhost:8080/api/message
-{"result":"fail","message":"service-1 -> service-2 -> connect ECONNREFUSED 172.17.0.1:8380"}
+# sample of when a fake error is returned
+GET request: http://localhost:8580/api/message
+{
+   "whoami": "simple-web-service-5",
+   "errorRate": "100",
+   "responseDelay": "0",
+   "call": {
+      "url": "none",
+      "status": "500",
+      "response": "Faking out an error"
+   }
+}
 
 # sample success output
 GET request: http://localhost:8580/api/message
-{ "whoami": "I am simple-web-service-5","call": { "url":"none"}}
+{
+   "whoami": "ec2-simple-web-service-5",
+   "call": {
+      "url": "none"
+   }
+}
 
 GET request: http://localhost:8480/api/message
-{ "whoami": "I am simple-web-service-4","call": { "url":"http://172.17.0.1:8580/api/message","status":"200","response":{ "whoami": "I am simple-web-service-5","call": { "url":"none"}}}}
+{
+   "whoami": "simple-web-service-4",
+   "errorRate": "0",
+   "responseDelay": "0",
+   "call": {
+      "url": "http://172.17.0.1:8580/api/message",
+      "status": "200",
+      "response": {
+         "whoami": "simple-web-service-5",
+         "errorRate": "0",
+         "responseDelay": "0",
+         "call": {
+            "url": "none"
+         }
+      }
+   }
+}
 ```
 
 ## api/about
@@ -37,7 +67,14 @@ Example:
 
 ```
 http://localhost:8480/api/about
-{"serviceName":"simple-web-service-4","messageurl":"http://172.17.0.1:8580/api/message","errorRate":0,"responseDelay":0}
+{
+    "DATE" : "20200910.0844",
+    "IMAGE_NAME" : "dtdemos/simple-web-service",
+    "IMAGE_TAG" : "0.1.0",
+    "REPO" : "https://github.com/dt-demos/simple-web-app.git",
+    "BRANCH" : "master",
+    "SHA" : "34806c14e248f91fc3ee5e17e1a4f0e36539c8cd",
+}
 ```
 
 ## api/delay
@@ -126,7 +163,3 @@ http://localhost:8080/api/
 400 status code
 {"result":"error","message":"Invalid route"}
 ```
-
-
-
-

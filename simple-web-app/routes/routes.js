@@ -30,10 +30,18 @@ function isJSON(str) {
 }
 
 router.get('/about', function(req, res) {
-  let responseMessage='';
-  res.writeHead(200, { 'Content-Type': 'text/html' });    
-  res.write(buildHtml(200, responseMessage));
-  res.end();
+  fs = require('fs');
+  let data="";
+  try {
+    data = fs.readFileSync('MANIFEST', 'utf8')
+    console.log(data)
+  } catch (err) {
+    console.error(err)
+    data="MANIFEST file not found"
+  }
+  console.log(data);
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).send(data); 
 });
 
 router.get('/', function(req, res) {
@@ -104,17 +112,19 @@ function buildHtml(code,message,showResponse) {
   html = html.replace(/SERVICE_TO_CALL_URL-PLACEHOLDER/g, serviceToCall);
   html = html.replace("MESSAGE-PLACEHOLDER", message);
   html = html.replace("SHOW-RESPONSE-PLACEHOLDER",showResponse);
+  html = html.replace("SERVICE-NAME-PLACEHOLDER",global.serviceName);
+
   if (code ==200) {
     html = html.replace("IMAGE-PLACEHOLDER", "green.png");
     html = html.replace(/ERROR-BUTTON-CLASS-VALUE-PLACEHOLDER/g, "hidden");
     html = html.replace(/COLOR-CLASS-VALUE-PLACEHOLDER/g, "green");
-    html = html.replace("SERVICE-TITLE-PLACEHOLDER", "I AM GOOD TO GO");
+    html = html.replace("SERVICE-MESSAGE-PLACEHOLDER", "I AM GOOD TO GO");
   }
   else {
     html = html.replace("IMAGE-PLACEHOLDER", "red.png");
     html = html.replace(/ERROR-BUTTON-CLASS-VALUE-PLACEHOLDER/g, "nothidden");
     html = html.replace(/COLOR-CLASS-VALUE-PLACEHOLDER/g, "red");
-    html = html.replace("SERVICE-TITLE-PLACEHOLDER", "I HAVE AN ERROR");
+    html = html.replace("SERVICE-MESSAGE-PLACEHOLDER", "I HAVE AN ERROR");
   }
   return html
 };
