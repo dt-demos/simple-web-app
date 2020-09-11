@@ -16,6 +16,8 @@ spec:
     spec:
       containers:
       - env:
+        - name: SERVICE_NAME
+          value: k8-simple-web-service-3
         - name: DT_CUSTOM_PROP
           value: "team=cheetah stage=dev project=demo service=simple-web-service-3"
         - name: SERVICE_TO_CALL_URL

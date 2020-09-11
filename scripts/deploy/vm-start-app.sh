@@ -1,7 +1,8 @@
 #!/bin/bash
 
+nameprefix=$1
 # if pass in any value, will not pull images -- do this when developing locally
-nopull=$1
+nopull=$2
 
 function start-container() {
   image=$1
@@ -23,6 +24,7 @@ function start-container() {
   echo "Running image: $image  container name: $name dt-custom-prop: $dtcustomprop"  
   sudo docker run -p $port:8080 -d \
     --name $name \
+    -e SERVICE_NAME=$nameprefix$name \
     -e SERVICE_TO_CALL_URL=$url \
     -e DT_CUSTOM_PROP="$dtcustomprop" \
     $image
@@ -30,6 +32,12 @@ function start-container() {
 
 # Main routine
 ./vm-stop-app.sh
+
+if [ -z $nameprefix ]; then
+  nameprefix=""
+else
+  nameprefix="$nameprefix-"
+fi
 
 # 172.17.0.1 is the IP that Docker cosntainer sees for the host it runs on
 start-container dtdemos/simple-web-service-1:0.1.0 8180 http://172.17.0.1:8280/api/message simple-web-service-1 dev demo simple-web-service-1
