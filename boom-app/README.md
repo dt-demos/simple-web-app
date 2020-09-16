@@ -1,30 +1,18 @@
 # Overview
 
-Dockerized application to show Docker Crashes for demos. 
+Dockerized application to show Kubernetes pod crashes for demos. 
 
-Written in Python and using the [Dynatrace Python SDK](https://github.com/dynatrace-oss/OneAgent-SDK-Python-AutoInstrumentation)  See this [blog](https://www.dynatrace.com/news/blog/end-to-end-request-monitoring-for-popular-python-frameworks-with-oneagent-sdk/) to learn about the SDK benefits.
+In the Dynatrace Kubernetes dashboard, these events will look like this:
 
-# Build
+<img src="images/boom-events.png" width="500"/>
 
-Use the ```buildpush.sh``` script to build and push the image as `dtdemos/boom-app:0.1.0`.
-
-# Deploy
-
-Assuming you have Kubernetes, run these commands to start the app.
-
-```
-kubectl apply -f boom-app.yaml -n demo-app-dev
-```
-
-# Monitor
-
-Assuming you have Kubernetes, run these commands to monitor the app.
+Validate by running these commands:
 
 ```
 kubectl -n demo-app-dev get pods -l app=boom-app -w
 ```
 
-will show output of app crashing and restarting
+Kubectl output shows the pod crashing and restarting
 
 ```
 NAME                        READY   STATUS             RESTARTS   AGE
@@ -47,10 +35,48 @@ boom-app-6464467678-xhnq7   1/1     Running            6          9m23s
 boom-app-6464467678-xhnq7   0/1     Error              6          10m
 ```
 
+# Deploy
+
+Assuming you have Kubernetes, run these commands to start the app.
+
+```
+kubectl apply -f boom-app.yaml -n demo-app-dev
+```
+
 # Clean up
 
 To remove the pod, run this command
 
 ```
 kubectl -n demo-app-dev delete deploy boom-app
+```
+
+# Internals
+
+The application is written in Python and instrumentes with the [Dynatrace Python SDK](https://github.com/dynatrace-oss/OneAgent-SDK-Python-AutoInstrumentation).  
+
+Be sure to read [End-to-end request monitoring for popular Python frameworks with OneAgent SDK blog](https://www.dynatrace.com/news/blog/end-to-end-request-monitoring-for-popular-python-frameworks-with-oneagent-sdk/) to learn more about the Dynatrace Python SDK.
+
+The app has two instrumented Python classes (BoomApp and BoomAppBomb) that will showup in Dyntrace as two services.
+
+<img src="images/boom-service.png" width="500"/>
+
+This is the internal sequence of classes and methods called.  
+
+`BoomApp.process() --> BoomApp.callUrl() --> BoomApp.callUrl() --> BoomApp.callUrl() --> BoomAppBomb.boom()`
+
+The `BoomAppBomb.boom()` method will throw an exception every 30 seconds that will crash the application.  The exception will look like this in Dynatrace. And you can analyze the failures.
+
+<img src="images/exception.png" width="500"/>
+
+# Build
+
+Use the ```buildpush.sh``` script to build and push the image as `dtdemos/boom-app:0.1.0`.
+
+# Run Locally
+
+Use this command to run from code assuming you have python 3.7
+
+```
+python script.py
 ```
