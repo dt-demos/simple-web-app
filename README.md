@@ -4,13 +4,17 @@ This repo contains the code and scripts to build and test a simple web applicati
 
 The primary use case is to show problems in the chain of service calls. In the example below, service-3 has a problem and the error propogate back to the web UI.
 
-<img src="images/callflow-error.png" width="400"/>
-
 By having Dynatrace OneAgent, the impacted services and root cause will be found.
 
-<img src="images/dt-problem.png"/>
+<img src="images/dt-problem1.png"/>
 
-# Internals of the simple-web-app and simple-web-service applications
+# Demo
+
+Watch this [Howdy Partner Twitch Episode](https://www.twitch.tv/videos/743201902?collection=VV23gbfLCRbZLg) to see it in action!!
+
+<img src="images/partner.png" width="400"/>
+
+# Demo App Internals
 
 Both the simple-web-app and the simple-web-service can be configured with a `SERVICE_TO_CALL_URL` environment variable that defines the simple-web-service it calls.  This value can be set to the `none` or to some URL. 
 
